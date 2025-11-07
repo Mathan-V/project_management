@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, List, ChevronDown } from "lucide-react";
 import { useAppContext } from "../../../contexts/AppContext";
-import type { Project } from "../../../utils/types";
+// import type { Project } from "../../../utils/types";
 import {
   getWeekDates,
   formatDate,
@@ -28,7 +28,7 @@ interface TimeEntry {
 }
 
 export const Timesheet: React.FC = () => {
-  const { projects, user } = useAppContext();
+  const { projects, users } = useAppContext();
   const [currentWeekStart, setCurrentWeekStart] = useState(new Date());
   const [timeEntries, setTimeEntries] = useState<TimeEntry[]>([]);
   const [loading, setLoading] = useState(false);
@@ -54,17 +54,17 @@ export const Timesheet: React.FC = () => {
           console.error('Error parsing user from localStorage:', err);
         }
       } else {
-        if (user) {
-          setCurrentUser(user);
-          console.log('User loaded from context:', user);
+        if (users) {
+          setCurrentUser(users);
+          console.log('User loaded from context:', users);
         } else {
-          console.warn('No user found in context or localStorage');
+          console.warn('No users found in context or localStorage');
         }
       }
     };
 
     fetchCurrentUser();
-  }, [user]);
+  }, [users]);
 
   // Filter entries based on user role
   const filterEntriesByRole = (entries: TimeEntry[]): TimeEntry[] => {
@@ -287,7 +287,7 @@ export const Timesheet: React.FC = () => {
     <div className="bg-gray-50 p-6">
       <div className="max-w-[1600px] mx-auto bg-white rounded-lg shadow-sm flex flex-col" style={{ height: 'calc(100vh - 3rem)' }}>
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b flex-shrink-0">
+        <div className="flex items-center justify-between p-6 border-b">
           <h1 className="text-2xl font-semibold text-gray-800">Timesheet</h1>
           
           <div className="flex items-center gap-3">

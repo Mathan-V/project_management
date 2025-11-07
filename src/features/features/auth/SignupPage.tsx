@@ -3,13 +3,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useFormState } from '../../../hooks/useFormState';
 import { Input } from '../../../components/ui/input';
 import { Select } from '../../../components/ui/Select';
-import { Button } from '../../../components/ui/Button';
+// import { Button } from '../../../components/ui/Button';
 import { Card, CardContent, CardHeader } from '../../../components/ui/Card';
 import { validateEmail, validatePassword, validateRequired } from '../../../utils/validators';
 import { authAPI } from '../../../api/auth.api';
+import { Button } from '../../../components/ui/Button';
+
 
 const SignupPage: React.FC = () => {
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const [roles, setRoles] = useState<{ value: string; label: string }[]>([]);
@@ -73,7 +75,7 @@ const SignupPage: React.FC = () => {
 
     if (!validateForm()) return;
 
-    setLoading(true);
+    // setLoading(true);
     try {
       const formDatas = {
         user_name: formData.name,
@@ -82,14 +84,14 @@ const SignupPage: React.FC = () => {
         role_id: Number(formData.role_id),
       };
       const response = await authAPI.signup(formDatas);
-      localStorage.setItem('access_token', response.token);
+      localStorage.setItem('access_token', response.access_token);
       localStorage.setItem('user', JSON.stringify(response.user));
 
       navigate('/');
     } catch (err: any) {
       setError(err.response?.data?.message || 'Signup failed. Please try again.');
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
@@ -172,7 +174,7 @@ const SignupPage: React.FC = () => {
                 type="submit"
                 variant="primary"
                 size="lg"
-                loading={loading}
+                // loading={loading}
                 className="w-full bg-amber-700 hover:bg-amber-800 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition duration-200"
               >
                 Create Account
@@ -197,3 +199,7 @@ const SignupPage: React.FC = () => {
 };
 
 export default SignupPage;
+
+// function setLoading(arg0: boolean) {
+//   throw new Error('Function not implemented.');
+// }

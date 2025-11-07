@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../../hooks/useAuth';
+// import { useAuth } from '../../../hooks/useAuth';
 import { useFormState } from '../../../hooks/useFormState';
 import { Input } from '../../../components/ui/input';
-import { Button } from '../../../components/ui/Button';
 import { validateEmail, validatePassword } from '../../../utils/validators';
 import { authAPI } from '../../../api/auth.api';
+import { Button } from '../../../components/ui/Button';
+// import { Button } from '../../../components/ui/Button';
+// import { Button } from '../../../components/ui/Button';
 
 const LoginPage: React.FC = () => {
-  const [loading, setLoading] = useState(false);
+  const [, setLoading] = useState<boolean>(false);
   const [error, setError] = useState('');
-  const { login } = useAuth();
+  // const { login } = useAuth();
   const navigate = useNavigate();
 
   const { formData, errors, updateField, setError: setFieldError } = useFormState({
@@ -152,7 +154,7 @@ const LoginPage: React.FC = () => {
               type="submit"
               variant="primary"
               size="lg"
-              loading={loading}
+              // loading={loading}
               className="w-full bg-yellow-400 text-white  py-6 rounded-full hover:bg-yellow-500 transition duration-200"
             >
               <div className='text-xl text-black'>

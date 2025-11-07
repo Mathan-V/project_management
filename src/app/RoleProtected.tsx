@@ -11,7 +11,7 @@ export const RoleProtected: React.FC<RoleProtectedProps> = ({
   children, 
   allowedRoles 
 }) => {
-  const { user } = useAuth();
+  const { user }:any = useAuth();
 
   if (!user || !allowedRoles.includes(user.role)) {
     return <Navigate to="/" replace />;

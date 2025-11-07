@@ -9,7 +9,7 @@ export const projectsAPI = {
     return response.data;
   },
 
-  getProjectById: async (project_id: string): Promise<Project> => {
+  getProjectById: async (project_id: any): Promise<Project> => {
     const response = await api.get<Project>(
       API_ENDPOINTS.PROJECTS.GET_SINGLE.replace('{project_id}', String(project_id))
     );

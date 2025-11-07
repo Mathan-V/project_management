@@ -9,7 +9,7 @@ import { timesheetsAPI } from "../../../api/timesheet.api";
 interface EventModalProps {
   show: boolean;
   isEditMode: boolean;
-  editingEvent: EventType | null;
+  editingEvent: EventType | any;
   startTime: string;
   endTime: string;
   selectedDate: Date;
@@ -43,7 +43,7 @@ export const EventModal: React.FC<EventModalProps> = ({
   description,
   project,
   // tags,
-  billable,
+  // billable,
   status: externalStatus,
   userId,
   onClose,
@@ -57,7 +57,7 @@ export const EventModal: React.FC<EventModalProps> = ({
   setProject,
   // setTags,
   // setBillable,
-  setStatus,
+  // setStatus,
 }) => {
   // **FIX 1: Internal status state with default**
   const [internalStatus, setInternalStatus] = useState<string>(
@@ -79,7 +79,7 @@ export const EventModal: React.FC<EventModalProps> = ({
     const fetchProjects = async () => {
       try {
         setLoadingProjects(true);
-        const data = await projectsAPI.getProjects();
+        const data:any = await projectsAPI.getProjects();
         setProjectList(data);
       } catch (err) {
         console.error("❌ Failed to fetch projects:", err);
@@ -151,7 +151,7 @@ export const EventModal: React.FC<EventModalProps> = ({
       const startDateTime = moment(`${dateStr} ${startTime}`, "YYYY-MM-DD HH:mm").toISOString();
       const endDateTime = moment(`${dateStr} ${endTime}`, "YYYY-MM-DD HH:mm").toISOString();
 
-      const payload = {
+      const payload:any = {
         projectId: selectedProject.id,
         userId: currentUserId,
         description: description.trim(),

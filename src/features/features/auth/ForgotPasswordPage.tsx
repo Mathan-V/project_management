@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useFormState } from '../../../hooks/useFormState';
 import { Input } from '../../../components/ui/input';
-import { Button } from '../../../components/ui/Button';
+// import { Button } from '../../../components/ui/Button';
 import { Card, CardContent, CardHeader } from '../../../components/ui/Card';
 import { validateEmail } from '../../../utils/validators';
 import { authAPI } from '../../../api/auth.api';
+import { Button } from '../../../components/ui/Button';
 
 const ForgotPasswordPage: React.FC = () => {
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
 
@@ -32,14 +33,14 @@ const ForgotPasswordPage: React.FC = () => {
       return;
     }
 
-    setLoading(true);
+    // setLoading(true);
     try {
       await authAPI.forgotPassword(formData.email);
       setSuccess(true);
     } catch (err: any) {
       setError(err.response?.data?.message || 'Failed to send reset email. Please try again.');
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
@@ -104,7 +105,7 @@ const ForgotPasswordPage: React.FC = () => {
                 type="submit"
                 variant="primary"
                 size="lg"
-                loading={loading}
+                // loading={loading}
                 className="w-full"
               >
                 Send Reset Link
@@ -127,3 +128,7 @@ const ForgotPasswordPage: React.FC = () => {
 };
 
 export default ForgotPasswordPage;
+
+// function setLoading(arg0: boolean) {
+//   throw new Error('Function not implemented.');
+// }

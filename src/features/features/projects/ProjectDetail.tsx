@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Star, MoreVertical, Plus, X } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import { clientsAPI } from "../../../api/client.api";
-import type { Client, PaginationParams } from "../../../utils/types";
+// import type { Client, PaginationParams } from "../../../utils/types";
 import { projectsAPI } from "../../../api/projects.api";
 import { usersAPI } from "../../../api/users.api";
 import { rolesAPI } from "../../../api/roles.api";
@@ -31,30 +31,29 @@ const ProjectDetail: React.FC = () => {
   const [activeTab, setActiveTab] = useState("status");
   const [isFavorite, setIsFavorite] = useState(false);
   const navigate = useNavigate();
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams<any>();
 
   // Project data
   const [projectName, setProjectName] = useState("");
   const [client, setClient] = useState("");
   const [projectColor, setProjectColor] = useState("#84cc16");
   const [status, setStatus] = useState("IN_PROGRESS"); // ADD THIS LINE
-  const [isBillable, setIsBillable] = useState(true);
-  const [isNonBillable, setIsNonBillable] = useState(false);
+  
   const [startDate, setStartDate] = useState("2025-10-01");
   const [endDate, setEndDate] = useState("");
-  const [rate, setRate] = useState("0.00");
+  
   const [visibility, setVisibility] = useState("public");
 
   // API state
-  const [clients, setClients] = useState<Client[]>([]);
+  const [clients, setClients] = useState<any []>([]);
   const [loadingClients, setLoadingClients] = useState(false);
-  const [clientsError, setClientsError] = useState<string | null>(null);
+  
 
   // Stats
   const [totalTracked, settotalTracked] = useState("");
   const [billableTime, setbillableTime] = useState("");
   const [nonBillableTime] = useState("0.00h");
-  const [totalAmount] = useState("");
+  
 
   // Team members
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
@@ -102,7 +101,7 @@ const ProjectDetail: React.FC = () => {
       setLoadingUsers(true);
       const response = await usersAPI.getUsers();
       
-      let usersList: User[] = [];
+      let usersList: any[] = [];
       if (Array.isArray(response)) {
         usersList = response;
       } else if (response.data && Array.isArray(response.data)) {
@@ -138,10 +137,10 @@ const ProjectDetail: React.FC = () => {
   const fetchClients = async () => {
     try {
       setLoadingClients(true);
-      setClientsError(null);
+      // setClientsError(null);
 
       const response = await clientsAPI.getClients();
-      let clientList: Client[] = [];
+      let clientList: any[] = [];
 
       if (Array.isArray(response)) {
         clientList = response;
@@ -152,7 +151,7 @@ const ProjectDetail: React.FC = () => {
       setClients(clientList);
     } catch (error) {
       console.error("Error fetching clients:", error);
-      setClientsError("Failed to load clients");
+      // setClientsError("Failed to load clients");
     } finally {
       setLoadingClients(false);
     }
@@ -162,7 +161,7 @@ const ProjectDetail: React.FC = () => {
   useEffect(() => {
     const fetchTimesheetProject = async () => {
       try {
-        const response = await projectsAPI.getProjectById(id);
+        const response:any = await projectsAPI.getProjectById(id);
         if (response && Array.isArray(response.timesheets)) {
           const total = response.timesheets.reduce(
             (sum: number, element: any) => sum + (Number(element.duration) || 0),
@@ -182,7 +181,7 @@ const ProjectDetail: React.FC = () => {
       if (!id) return;
       try {
         const res = await projectsAPI.getProjectById(id);
-        const project = res.data || res;
+        const project:any = res.data || res ;
 
         setProjectName(project.project_name || "");
         setStartDate(project.start_date ? project.start_date.split("T")[0] : "");

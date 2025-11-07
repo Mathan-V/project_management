@@ -15,7 +15,7 @@ export const timesheetsAPI = {
   },
 
   getTimesheetByProject: async (
-    projectId: string,
+    projectId: any,
     params?: PaginationParams & TimesheetFilters
   ): Promise<PaginatedResponse<TimesheetEntry>> => {
     const url = API_ENDPOINTS.TIMESHEET.GET_ALL.replace('{project_id}', projectId);

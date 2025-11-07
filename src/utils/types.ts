@@ -8,6 +8,7 @@ export interface User {
   is_active: boolean;
   role_id: number | null;
   created_at: string;
+  createdAt:string;
   role: {
       id: number;
       name: string;
@@ -59,6 +60,7 @@ export interface Client {
   email : string;
   notes : string;
   is_enabled : boolean;
+  creator : any;
 
 }
 
@@ -84,6 +86,8 @@ export interface TimesheetEntry{
 
 
 export interface Project {
+  timesheets(timesheets: any): unknown;
+  data: Project;
   project_name: string | number | readonly string[] | undefined;
   id: number;
   name: string;
@@ -151,6 +155,7 @@ export interface Permission {
 
 
 export interface PaginatedResponse<T> {
+  items: boolean;
   results: PaginatedResponse<Role>;
   data: T[];
   total: number;

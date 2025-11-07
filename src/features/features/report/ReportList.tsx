@@ -132,11 +132,11 @@ const Pagination: React.FC<PaginationProps> = ({
 };
 
 /* ------------------------------------------- DATE FIX HELPERS ------------------------------------------- */
-const toLocalDateKey = (isoStr: string) => {
-  const d = new Date(isoStr);
-  const local = new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
-  return local.toISOString().split("T")[0];
-};
+// const toLocalDateKey = (isoStr: string) => {
+//   const d = new Date(isoStr);
+//   const local = new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
+//   return local.toISOString().split("T")[0];
+// };
 
 /* ------------------------------------------------ COMPONENT ------------------------------------------------ */
 const Reports: React.FC = () => {

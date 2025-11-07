@@ -27,8 +27,8 @@ const CalendarViewComponent: React.FC = () => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
-  const [selectedSlot, setSelectedSlot] = useState<SlotInfo | null>(null);
-  const [editingEvent, setEditingEvent] = useState<EventType | null>(null);
+  const [, setSelectedSlot] = useState<SlotInfo | null>(null);
+  const [editingEvent, setEditingEvent] = useState<EventType | any>(null);
 
   // Form state
   const [startTime, setStartTime] = useState("00:00");
@@ -36,19 +36,19 @@ const CalendarViewComponent: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [description, setDescription] = useState("");
   const [projectName, setProjectName] = useState(""); // <-- string
-  const [tags, setTags] = useState("");
-  const [billable, setBillable] = useState(true);
+  // const [tags, setTags] = useState<any>("");
+  // const [billable, setBillable] = useState(true);
   const [status, setStatus] = useState("PENDING"); // <-- NEW
 
   const userId = JSON.parse(localStorage.getItem("user") || "{}")?.id;
 
   // FETCH PROJECTS
-  const [projectOptions, setProjectOptions] = useState<{ value: string; label: string }[]>([]);
+  const [, setProjectOptions] = useState<{ value: string; label: string }[]>([]);
 
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const data = await projectsAPI.getProjects();
+        const data:any = await projectsAPI.getProjects();
         const formatted = data.map((p: any) => ({
           value: p.project_name,
           label: p.project_name,
@@ -68,7 +68,7 @@ const CalendarViewComponent: React.FC = () => {
       const currentUserName = userData?.user_name;
       const currentRoleId = userData?.role_id;
 
-      const response = await timesheetsAPI.getTimesheetsAll();
+      const response:any = await timesheetsAPI.getTimesheetsAll();
       const isAdmin = currentRoleId === 4;
 
       const filtered = isAdmin
@@ -111,15 +111,15 @@ const CalendarViewComponent: React.FC = () => {
     setSelectedDate(slotInfo.start);
     setDescription("");
     setProjectName("");
-    setTags("");
-    setBillable(true);
+    // setTags("");
+    // setBillable(true);
     setStatus("PENDING");
     setShowModal(true);
   };
 
   // OPEN EDIT MODAL
   const handleSelectEvent = (event: Event) => {
-    const e = event as EventType;
+    const e:any = event as EventType;
     const start = moment(e.start).format("HH:mm");
     const end = moment(e.end).format("HH:mm");
 
@@ -130,8 +130,8 @@ const CalendarViewComponent: React.FC = () => {
     setSelectedDate(e.start!);
     setDescription(e.description || "");
     setProjectName(e.project_name || "");
-    setTags((e.tags || []).join(", "));
-    setBillable(!!e.billable);
+    // setTags((e.tags || []).join(", "));
+    // setBillable(!!e.billable);
     setStatus(e.status || "PENDING");
     setShowModal(true);
   };
@@ -275,7 +275,7 @@ const CalendarViewComponent: React.FC = () => {
           onNavigate={setDate}
           eventPropGetter={eventPropGetter}
           components={{
-            event: ({ event }) => (
+            event: ({ event }:any) => (
               <div>
                 <div className="font-semibold text-xs">{event.description}</div>
                 <div className="text-xs opacity-75">{event.status}</div>
@@ -294,9 +294,7 @@ const CalendarViewComponent: React.FC = () => {
         endTime={endTime}
         selectedDate={selectedDate}
         description={description}
-        project={projectName}   
-        tags={tags}
-        billable={billable}
+        project={projectName} 
         status={status}           
         userId={userId}
         onClose={() => setShowModal(false)}
@@ -308,8 +306,8 @@ const CalendarViewComponent: React.FC = () => {
         setSelectedDate={setSelectedDate}
         setDescription={setDescription}
         setProject={setProjectName}
-        setTags={setTags}
-        setBillable={setBillable}
+        // setTags={setTags}
+        // setBillable={setBillable}
         setStatus={setStatus}        
       />
     </div>

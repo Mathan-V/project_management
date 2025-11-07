@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 import type { EventType, Project, User, AppContextType } from "../utils/types";
-import { formatDate, formatTime } from "../utils/timeCalculations";
+import { formatDate } from "../utils/timeCalculations";
 import { projectsAPI } from "../api/projects.api";
 import { timesheetsAPI } from "../api/timesheet.api";
 import { usersAPI } from "../api/users.api"; // ✅ Your existing users API
@@ -9,7 +9,7 @@ import { usersAPI } from "../api/users.api"; // ✅ Your existing users API
 interface ExtendedAppContextType extends AppContextType {
   users: User[];
   isLoadingUsers: boolean;
-  refreshUsers: () => void;
+  refreshUsers:any;
 }
 
 const AppContext = createContext<ExtendedAppContextType | undefined>(undefined);
@@ -44,7 +44,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
   const [projects, setProjects] = useState<Project[]>([]);
   const [users, setUsers] = useState<User[]>([]); // ✅ Add users state
-  const [isLoadingTimesheet, setIsLoadingTimesheet] = useState(false);
+  const [, setIsLoadingTimesheet] = useState(false);
   const [isLoadingUsers, setIsLoadingUsers] = useState(false); // ✅ Add loading state
 
   // ✅ Fetch users from backend API
@@ -53,7 +53,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     setIsLoadingUsers(true);
     
     try {
-      const data = await usersAPI.getUsers(); // Use your actual users API
+      const data:any = await usersAPI.getUsers(); // Use your actual users API
       console.log('📋 Fetched users:', data);
       
       setUsers(data); // Store users as-is from backend
@@ -74,7 +74,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     
     try {
       const updatedProjects = await Promise.all(
-        projectsList.map(async (project) => {
+        projectsList.map(async (project:any) => {
           try {
             // Fetch timesheets for this project
             const timesheets = await timesheetsAPI.getTimesheetByProject(project.id);
@@ -134,7 +134,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         await fetchUsers();
         
         // Fetch projects
-        const data = await projectsAPI.getProjects();
+        const data:any = await projectsAPI.getProjects();
         console.log('📦 Fetched projects:', data);
         
         const formattedProjects = data.map((p: any) => ({
@@ -182,11 +182,11 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   };
 
   // Optional: Refresh timesheet data manually
-  const refreshTimesheets = useCallback(() => {
-    if (projects.length > 0) {
-      fetchTimesheetData(projects);
-    }
-  }, [projects, fetchTimesheetData]);
+  // const refreshTimesheets = useCallback(() => {
+  //   if (projects.length > 0) {
+  //     fetchTimesheetData(projects);
+  //   }
+  // }, [projects, fetchTimesheetData]);
 
   // ✅ Add refresh users function
   const refreshUsers = useCallback(() => {
@@ -203,9 +203,9 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         updateEvent, 
         deleteEvent, 
         updateProjects,
-        refreshTimesheets,
+        // refreshTimesheets,
         refreshUsers, // ✅ Add refresh users
-        isLoadingTimesheet,
+        // isLoadingTimesheet,
         isLoadingUsers // ✅ Add loading state
       }}
     >

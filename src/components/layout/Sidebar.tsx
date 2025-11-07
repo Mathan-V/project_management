@@ -23,7 +23,7 @@ export const Sidebar: React.FC = () => {
   useEffect(() => {
     const fetchPermissions = async () => {
       try {
-        const roles = await rolesAPI.getRoles();
+        const roles : any = await rolesAPI.getRoles();
         console.log("Fetched roles:", roles);
 
         // Find the current user's role
@@ -56,8 +56,7 @@ export const Sidebar: React.FC = () => {
     }
   }, [u_name]);
 
-  const userRole = u_name?.role?.name?.toLowerCase() || 'user';
-
+  
   // Helper function to check if user has any permission starting with a prefix
   const hasPermissionStartingWith = (prefix: string) => {
     return permissions.some(perm => perm.startsWith(prefix));

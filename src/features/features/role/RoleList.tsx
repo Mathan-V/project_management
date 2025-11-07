@@ -1,7 +1,7 @@
-import { MoreVertical, Plus, Trash2, X, ChevronDown } from "lucide-react";
+import { MoreVertical, Trash2, X, ChevronDown } from "lucide-react";
 import React, { useState, useEffect, useRef } from "react";
 import { rolesAPI } from '../../../api/roles.api';
-import type { Role, PaginationParams } from "../../../utils/types";
+import type { Role } from "../../../utils/types";
 import { useNavigate } from "react-router-dom";
 
 const RoleList: React.FC = () => {
@@ -21,7 +21,7 @@ const RoleList: React.FC = () => {
   const fetchRoles = async (pageNum = 1) => {
     setLoading(true);
     try {
-      const params: Partial<PaginationParams> = { page: pageNum, limit };
+      const params : any = { page: pageNum, limit };
       const response = await rolesAPI.getRoles(params);
 
       if (Array.isArray(response)) {

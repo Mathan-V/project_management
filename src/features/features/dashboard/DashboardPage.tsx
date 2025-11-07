@@ -58,12 +58,12 @@ const getDatesInRange = (start: string, end: string): string[] => {
 };
 
 const now = new Date();
-const todayStr = now.toISOString().split("T")[0];
+// const todayStr = now.toISOString().split("T")[0];
 const weekAgo = new Date(now);
 weekAgo.setDate(now.getDate() - 7);
-const weekAgoStr = weekAgo.toISOString().split("T")[0];
-const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
-const monthStartStr = monthStart.toISOString().split("T")[0];
+// const weekAgoStr = weekAgo.toISOString().split("T")[0];
+// const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+// const monthStartStr = monthStart.toISOString().split("T")[0];
 
 /* ──────────────────────────────── UI Components ──────────────────────────────── */
 const Card: React.FC<{ children: React.ReactNode; className?: string }> = ({
@@ -133,15 +133,15 @@ const QuickActionCard: React.FC<{
 
 /* ──────────────────────────────── Main Component ──────────────────────────────── */
 const DashboardPage: React.FC = () => {
-  const { projects: rawProjects, users } = useAppContext();
+  const { projects: rawProjects  }:any = useAppContext();
 
   /* ---------- 1. Load Timesheets (same API you use in Reports) ---------- */
   const [timesheets, setTimesheets] = useState<Timesheet[]>([]);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const load = async () => {
-      setLoading(true);
+      // setLoading(true);
       const all: Timesheet[] = [];
       for (const p of rawProjects) {
         try {
@@ -152,14 +152,14 @@ const DashboardPage: React.FC = () => {
         }
       }
       setTimesheets(all);
-      setLoading(false);
+      // setLoading(false);
     };
     if (rawProjects.length) load();
   }, [rawProjects]);
 
   /* ---------- 2. Normalise Projects (add colour if missing) ---------- */
   const projects = useMemo(() => {
-    return rawProjects.map((p) => ({
+    return rawProjects.map((p:any) => ({
       ...p,
       color: p.color ?? "#6B7280", // default gray
     }));
@@ -173,7 +173,7 @@ const DashboardPage: React.FC = () => {
       const dates = getDatesInRange(ts.start_date.split("T")[0], ts.end_date.split("T")[0]);
       const hoursPerDay = dates.length ? ts.duration / dates.length : 0;
 
-      dates.forEach((date) => {
+      dates.forEach(() => {
         // we only need totals, not per-day entries
         const prev = map.get(ts.projectId) ?? 0;
         map.set(ts.projectId, prev + hoursPerDay);
@@ -249,7 +249,7 @@ console.log('Month End:', monthEnd);
 
   return {
     totalProjects: projects.length,
-    activeProjects: projects.filter((p) => p.status === "active").length,
+    activeProjects: projects.filter((p : any) => p.status === "active").length,
     totalHours: formatHHMM(totalHours),
     weekHours: formatHHMM(weekHours),
     todayHours: formatHHMM(todayHours),
@@ -429,7 +429,7 @@ console.log('Month End:', monthEnd);
             <CardContent>
               {projects.length > 0 ? (
                 <div className="space-y-0">
-                  {projects.slice(0, 5).map((p) => (
+                  {projects.slice(0, 5).map((p:any) => (
                     <RecentProjectItem key={p.id} project={p} />
                   ))}
                 </div>
@@ -490,3 +490,9 @@ console.log('Month End:', monthEnd);
 };
 
 export default DashboardPage;
+
+
+// function setLoading(arg0: boolean) {
+//   throw new Error("Function not implemented.");
+// }
+

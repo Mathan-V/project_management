@@ -2,7 +2,6 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { ProtectedRoute } from './ProtectedRoute';
-import { RoleProtected } from './RoleProtected';
 import {AppProvider} from "../contexts/AppContext"
 // Lazy load pages for better performance
 const LoginPage = React.lazy(() => import('../features/features/auth/LoginPage'));

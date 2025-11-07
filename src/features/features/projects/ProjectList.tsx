@@ -22,6 +22,7 @@ interface Project {
 
 // Backend Project Interface (API response)
 interface BackendProject {
+  created_by: any;
   id: number;
   project_name: string;
   description: string;
@@ -56,7 +57,7 @@ const ProjectsPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeFilter, setActiveFilter] = useState<string>("all");
   const [clientFilter, setClientFilter] = useState<string>("all");
-  const [billableFilter, setBillableFilter] = useState<string>("all");
+  // const [billableFilter, setBillableFilter] = useState<string>("all");
 
   const [showActiveDropdown, setShowActiveDropdown] = useState(false);
   const [showClientDropdown, setShowClientDropdown] = useState(false);
@@ -85,8 +86,8 @@ const ProjectsPage: React.FC = () => {
   const [endDate, setendDate] = useState("");
 
   const [clients, setClients] = useState<Client[]>([]);
-  const [loadingClients, setLoadingClients] = useState(false);
-  const [clientsError, setClientsError] = useState<string | null>(null);
+  // const [loadingClients, setLoadingClients] = useState(false);
+  // const [clientsError, setClientsError] = useState<string | null>(null);
 
   useEffect(() => {
     fetchClients();
@@ -94,8 +95,8 @@ const ProjectsPage: React.FC = () => {
 
   const fetchClients = async () => {
     try {
-      setLoadingClients(true);
-      setClientsError(null);
+      // setLoadingClients(true);
+      // setClientsError(null);
 
       const response = await clientsAPI.getClients();
       let clientList: Client[] = [];
@@ -111,9 +112,9 @@ const ProjectsPage: React.FC = () => {
       setClients(clientList);
     } catch (error) {
       console.error("Error fetching clients:", error);
-      setClientsError("Failed to load clients");
+      // setClientsError("Failed to load clients");
     } finally {
-      setLoadingClients(false);
+      // setLoadingClients(false);
     }
   };
 
@@ -208,12 +209,12 @@ const ProjectsPage: React.FC = () => {
       activeFilter === "all" || (activeFilter === "active" && project.active) || (activeFilter === "inactive" && !project.active);
     const matchesClient =
       clientFilter === "all" || (clientFilter === "none" && !project.client) || project.client === clientFilter;
-    const matchesBillable =
-      billableFilter === "all" ||
-      (billableFilter === "billable" && project.billable) ||
-      (billableFilter === "non-billable" && !project.billable);
+    // const matchesBillable =
+    //   billableFilter === "all" ||
+    //   (billableFilter === "billable" && project.billable) ||
+    //   (billableFilter === "non-billable" && !project.billable);
 
-    return matchesSearch && matchesActive && matchesClient && matchesBillable;
+    return matchesSearch && matchesActive && matchesClient;
   });
 
   // Calculate pagination
@@ -255,7 +256,7 @@ const ProjectsPage: React.FC = () => {
     const userId = userData ? JSON.parse(userData).id : null;
 
     try {
-      const newProjectData = {
+      const newProjectData:any = {
         project_name: projectName,
         description: "",
         start_date: startDate ? new Date(startDate).toISOString() : new Date().toISOString(),
@@ -423,7 +424,7 @@ const ProjectsPage: React.FC = () => {
   // Reset to first page when filters change
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchTerm, activeFilter, clientFilter, billableFilter]);
+  }, [searchTerm, activeFilter, clientFilter]);
 
   return (
     <div

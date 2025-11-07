@@ -15,6 +15,7 @@ interface ApiUser {
   created_at: string;
   projects: any[];
   timesheets: any[];
+
 }
 
 const transformApiUserToUser = (apiUser: ApiUser | null): User | null => {
@@ -83,7 +84,7 @@ const UserFormModal: React.FC<UserFormModalProps> = ({
   const [email, setEmail] = useState(initialData?.email || "");
   const [password, setPassword] = useState("");
   const [roleName, setRoleName] = useState(initialData?.rolename || "Employee");
-  const [status, setStatus] = useState<"Active" | "Inactive">(initialData?.status || "Active");
+  const [status, setStatus] = useState<string >(initialData?.status || "Active");
   const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
@@ -526,7 +527,7 @@ const DeleteConfirmModal: React.FC<DeleteConfirmModalProps> = ({
 };
 
 const UserList: React.FC = () => {
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<any[]>([]);
   const [roles, setRoles] = useState<{ id: number; name: string }[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -535,7 +536,7 @@ const UserList: React.FC = () => {
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const [showMenu, setShowMenu] = useState<number | null>(null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const [userToDelete, setUserToDelete] = useState<{ id: number; name: string } | null>(null);
+  const [userToDelete, setUserToDelete] = useState<any>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   
   // Pagination state
@@ -547,7 +548,7 @@ const UserList: React.FC = () => {
     setLoading(true);
     setError(null);
     try {
-      const data: ApiUser[] = await usersAPI.getUsers({ page, limit });
+      const data: any = await usersAPI.getUsers({ page, limit });
       console.log("API Response:", JSON.stringify(data, null, 2));
       const transformedUsers = Array.isArray(data)
         ? data.map(transformApiUserToUser).filter((u): u is User => u !== null).sort((a, b) => {
@@ -584,9 +585,9 @@ const UserList: React.FC = () => {
     fetchRoles();
   }, [currentPage, itemsPerPage]);
 
-  const handleCreate = async (user: Partial<ApiUser>) => {
+  const handleCreate = async (user: any) => {
     try {
-      const newApiUser = await usersAPI.createUser(user);
+      const newApiUser : any= await usersAPI.createUser(user);
       const newUser = transformApiUserToUser(newApiUser);
       setUsers((prev) => [newUser, ...prev]);
       setShowCreateModal(false);
@@ -597,7 +598,7 @@ const UserList: React.FC = () => {
     }
   };
 
-  const handleUpdate = async (user: Partial<ApiUser>) => {
+  const handleUpdate = async (user:any) => {
     if (!editingUser) return;
 
     try {

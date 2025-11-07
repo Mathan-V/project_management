@@ -11,7 +11,7 @@ interface Permission {
 }
 
 const RolePermission: React.FC = () => {
-  const [permissions, setPermissions] = useState<Permission[]>([]);
+  const [permissions, setPermissions] = useState<any>([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -79,7 +79,7 @@ const RolePermission: React.FC = () => {
     if (window.confirm("Are you sure you want to delete this permission?")) {
       try {
         await permissionsAPI.deletePermission(id);
-        setPermissions(permissions.filter((p) => p.id !== id));
+        setPermissions(permissions.filter((p:any) => p.id !== id));
         setShowMenuId(null);
       } catch (error) {
         console.error('Error deleting permission:', error);
@@ -103,7 +103,7 @@ const RolePermission: React.FC = () => {
           formData
         );
         setPermissions(
-          permissions.map((p) =>
+          permissions.map((p : any) =>
             p.id === currentPermission.id ? updatedPermission : p
           )
         );
@@ -145,7 +145,7 @@ const RolePermission: React.FC = () => {
 
   // Filter permissions
   const filteredPermissions = permissions.filter(
-    (p) =>
+    (p : any) =>
       p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       p.code.toLowerCase().includes(searchQuery.toLowerCase()) ||
       p.description.toLowerCase().includes(searchQuery.toLowerCase())
@@ -245,7 +245,7 @@ const RolePermission: React.FC = () => {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
-                    {currentPermissions.map((permission) => (
+                    {currentPermissions.map((permission:any) => (
                       <tr key={permission.id} className="hover:bg-gray-50">
                         <td className="px-6 py-4 text-sm font-medium text-gray-900">
                           {permission.name}
